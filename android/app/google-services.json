@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "993897627966",
+    "project_id": "merokagajpatra-862ed",
+    "storage_bucket": "merokagajpatra-862ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993897627966:android:c2228ef93ee47a81afac6f",
+        "android_client_info": {
+          "package_name": "com.example.kagajpatra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993897627966-ptu3vtq9lu3l0ib5jvnivd8ivecdgcvm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOE8Mv8BtygjpKATSlKvX7DIJsDMSm2c4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993897627966-ptu3vtq9lu3l0ib5jvnivd8ivecdgcvm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
