@@ -203,6 +203,13 @@ abstract class AppStyles {
     height: calculateHeight(24, 20),
     fontStyle: FontStyle.normal,
   );
+  //medium
+  static TextStyle text29PxMedium = GoogleFonts.lato(
+    fontSize: 29.sp,
+    fontWeight: FontWeight.w500,
+    height: calculateHeight(28, 22),
+    fontStyle: FontStyle.normal,
+  );
 
   //medium
   static TextStyle text30PxBold = GoogleFonts.lato(
