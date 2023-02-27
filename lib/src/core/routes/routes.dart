@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kagajpatra/src/app/screens/auth/login/presentation/login_screen.dart';
 import 'package:kagajpatra/src/app/screens/auth/signup/presentation/signup_screen.dart';
+import 'package:kagajpatra/src/app/screens/homescreen/landingscreen/presentation/landings_screen.dart';
 import 'package:kagajpatra/src/app/screens/homescreen/presentation/home_screen.dart';
 
 class Routes {

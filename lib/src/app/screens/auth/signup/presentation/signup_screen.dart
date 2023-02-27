@@ -24,7 +24,7 @@ class SignUpScreen extends StatelessWidget {
             clipper: Clipper(),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: 100,
+              height: 160,
               decoration: const BoxDecoration(
                   gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [Colors.blue, Colors.purple])),
             ),

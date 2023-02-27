@@ -70,7 +70,6 @@ class LoginScreen extends StatelessWidget {
                                         disabledBackgroundColor: Colors.transparent.withOpacity(0.12),
                                         shadowColor: Colors.transparent),
                                     onPressed: () {
-                                      //TODO Login Button making work
                                       if (formKey.currentState!.validate()) {
                                         LoginAuth.signInwithEmailandPass(email.text, password.text, context);
                                       }
