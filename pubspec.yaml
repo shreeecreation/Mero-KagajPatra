@@ -11,24 +11,27 @@ dependencies:
   flutter:
     sdk: flutter
   adaptive_sizer: ^0.0.4
+
+  
   #firebase
   firebase_core: ^2.7.0
+  firebase_auth: ^4.2.9
 
   #using the google fonts
   google_fonts: ^4.0.1
 
   #State Management 
-  get: ^4.6.5
+  flutter_bloc: ^8.1.2
 
-  # path: ^1.6.2
-  # path_provider: 0.5.0+1
-  # flutter_file_manager: ^0.2.0
-  
-  cupertino_icons: ^1.0.2
-  firebase_auth: ^4.2.9
+  #filehandling
   path_provider: ^2.0.13
   file_manager: ^1.0.1
   permission_handler: ^10.2.0
+  path: ^1.8.2
+  
+  
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

@@ -1,99 +1,78 @@
-import 'dart:async';
 import 'dart:io';
 import 'package:file_manager/file_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kagajpatra/src/app/screens/auth/login/domain/login_auth.dart';
 import 'package:kagajpatra/src/app/screens/homescreen/landingscreen/domain/landingscreen_domain.dart';
 import 'package:kagajpatra/src/core/themes/appstyles.dart';
+import 'package:kagajpatra/src/core/userfoldercreate/userfoldercreate.dart';
 
-class LandingScreen extends StatefulWidget {
+import 'bloc/folderbloc_bloc.dart';
+
+class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
 
   @override
-  State<LandingScreen> createState() => _LandingScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FloatingActionButton(
+            onPressed: () {
+              UserFolderCreateDialog.createFolder(context);
+            },
+            child: const Icon(Icons.add)),
+      ),
+      appBar: AppBar(
+        elevation: 0.5,
+        title: const Text("Mero KagajPatra"),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: <Color>[Colors.blue, Colors.purple]),
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                LoginAuth.logOutUser();
+              },
+              icon: const Icon(Icons.logout))
+        ],
+      ),
+      body: const Text("Dasdsd"),
+    );
+  }
 }
 
-class _LandingScreenState extends State<LandingScreen> {
-  bool isLoading = false;
-  @override
-  void initState() {
-    Timer(const Duration(seconds: 2), () {
-      setState(() {
-        isLoading = true;
-      });
-    });
-    // TODO: implement initState
-    super.initState();
-  }
+class DefaultFolder extends StatelessWidget {
+  const DefaultFolder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    String a;
-    FileManagerController controller = FileManagerController();
-
-    void getPath() async {
-      a = await PathController.getPath();
-      controller.setCurrentPath = a;
-    }
-
-    getPath(); // TODO implements the path of directory
-
-    return ControlBackButton(
-      controller: controller,
-      child: Scaffold(
-          appBar: AppBar(
-            elevation: 0.2,
-            title: const Text("Mero KagajPatra"),
-            flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(begin: Alignment.centerLeft, end: Alignment.centerRight, colors: <Color>[Colors.blue, Colors.purple]),
-              ),
-            ),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    LoginAuth.logOutUser();
-                  },
-                  icon: const Icon(Icons.logout))
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15),
-              child: Column(children: [
-                Text("Default Folder ", style: AppStyles.text20PxSemiBold),
-                FileManager(
-                  controller: controller,
-                  builder: (context, snapshot) {
-                    isLoading ? null : getPath(); // TODO implements the path of directory
-                    final List<FileSystemEntity> entities = snapshot;
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: entities.length,
-                      itemBuilder: (context, index) {
-                        FileSystemEntity entity = entities[index];
-                        return Card(
-                          child: ListTile(
-                            leading: FileManager.isFile(entity) ? const Icon(Icons.feed_outlined) : const Icon(Icons.folder),
-                            title: Text(FileManager.basename(entity)),
-                            subtitle: subtitle(entity),
-                            onTap: () async {
-                              if (FileManager.isDirectory(entity)) {
-                                controller.openDirectory(entity);
-                              } else {}
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 10),
-                Text("User Added Folder ", style: AppStyles.text20PxSemiBold),
-              ]),
-            ),
-          )),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: GridView.builder(
+          shrinkWrap: true,
+          gridDelegate:
+              const SliverGridDelegateWithFixedCrossAxisCount(mainAxisSpacing: 5, crossAxisSpacing: 5, crossAxisCount: 3, childAspectRatio: 1),
+          itemCount: PathController.folders.length,
+          itemBuilder: (BuildContext ctx, index) {
+            return Column(
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      //   return DefaultFolderScreen(folderName: PathController.clickedFolderPath);
+                      // }));
+                      context.read<FolderBloc>().add(FolderChangeFolderEvent());
+                      PathController.getDir("/appfiles/img/${PathController.folderNames[index]}");
+                      PathController.clickedFolderPath = PathController.folderNames[index];
+                    },
+                    child: const Icon(Icons.folder, size: 90, color: Color.fromARGB(255, 243, 190, 33))),
+                Text(PathController.folderNames[index], style: AppStyles.text16PxMedium),
+              ],
+            );
+          }),
     );
   }
 }

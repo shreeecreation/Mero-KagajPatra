@@ -1,18 +1,28 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
+
 import 'package:path_provider/path_provider.dart';
 
 class PathController {
-  static String path = "";
+  static String currentPath = "";
 
-  static Future<String> getPath() async {
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      var dir = await getApplicationDocumentsDirectory();
-      print(dir.path);
-      return "${dir.path}/appfiles";
-    } else {
-      var dir = await getApplicationDocumentsDirectory();
+  static List<FileSystemEntity> folders = <FileSystemEntity>[];
+  static List<String> folderNames = [];
 
-      return "${dir.path}/appfiles";
+  static String clickedFolderPath = "";
+  static Future<void> getDir(String path) async {
+    final directory = await getExternalStorageDirectory();
+    final dir = "${directory!.path}/$path";
+    String pdfDirectory = '$dir/';
+    final myDir = Directory(pdfDirectory);
+    folders = myDir.listSync(recursive: true, followLinks: false);
+    for (FileSystemEntity fileOrDirectory in folders) {
+      if (fileOrDirectory is Directory) {
+        folderNames.add(fileOrDirectory.path.split('/').last);
+      }
     }
+  }
+
+  static String getStringName() {
+    return clickedFolderPath;
   }
 }
